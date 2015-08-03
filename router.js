@@ -8,7 +8,7 @@ var router = express.Router();
 
 // default options
 var options;
-var profile_base_url = 'https://wordpress.org/support/profile/';
+var profile_base_url = 'https://wordpress.org/support/plugin/';
 
 // static files
 router.use( express.static( __dirname + '/assets' ) );
@@ -73,7 +73,7 @@ router.get( '/', function( req, res ) {
 
 
 // profile/profile-name
-router.get( "/profile/:profile([0-9a-zA-Z\-_+.]+)", function( req, res ) {
+router.get( "/plugin/:profile([0-9a-zA-Z\-_+.]+)", function( req, res ) {
 
 	// set profile
 	options.profile = req.params.profile;
@@ -132,7 +132,7 @@ router.get( "/profile/:profile([0-9a-zA-Z\-_+.]+)", function( req, res ) {
 
 
 // post action
-router.post( '/profile', function( req, res ) {
+router.post( '/plugin', function( req, res ) {
 
 	var profile = req.body.profile_name;
 	console.log( 'post' );
@@ -152,7 +152,7 @@ router.post( '/profile', function( req, res ) {
 		res.redirect( '/' );
 	} else {
 
-		res.redirect( '/profile/' + profile );
+		res.redirect( '/plugin/' + profile );
 	}
 
 } );

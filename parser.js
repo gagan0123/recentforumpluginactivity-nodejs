@@ -29,11 +29,11 @@ exports.parse_html = function( html ) {
 	var $ = cheerio.load( html );
 
 	// Topics that contain "Most recent reply"
-	$( '#user-replies .freshness:contains("Most recent reply")' ).filter( function() {
+	$( '#latest td' ).filter( function() {
 		var item = {};
 
 		// get content from parent
-		var parent = $( this ).parents( 'li' );
+		var parent = $( this ).parents( 'tr' );
 
 		if ( !parent.length ) {
 			return false;
@@ -45,35 +45,19 @@ exports.parse_html = function( html ) {
 		} ).text().replace( /[\t\r\n]+/g, "" ).trim();
 
 		// Get status from text node string
-		item[ 'resolved' ] = __.find( [ '[resolved] [closed]', '[resolved]', '[closed]' ], function( status ) {
-			return text.indexOf( status ) === 0;
-		} );
-
-		// Get user reply from text node string
-		// (e.g User last replied: 12 hours ago.)
-		if ( __.defaults( item, defaults )[ 'resolved' ].length ) {
-			item[ 'user_reply' ] = text.replace( item[ 'resolved' ], '' ).trim();
-		} else {
-			item[ 'user_reply' ] = text.trim();
-		}
+		item[ 'resolved' ] = parent.hasClass('resolved')? '[resolved]':false;
 
 		// Get the topic link html.
 		var link = parent.find( 'a' ).first();
 		item[ 'link' ] = link.length ? $.html( parent.find( 'a' ).first() ) : '';
 
-		// Get content from freshness span.
-		text = $( this ).text();
-
-		// Split text at the first ' ago'.
-		var parts = text.split( ' ago' );
-
 		// Get text part with the time variable 
 		// e.g. "Most recent reply: 11 hours ago"
-		var text_time = parts.shift();
+		var text_time = $( this ).find(":nth-child(4) small").text();
 
 		// Get last reply text.
 		// e.g. "by keesiemeijer"
-		item[ 'last_reply_author' ] = parts.join( ' ago' ).trim();
+		item[ 'last_reply_author' ] = $( this ).find(":nth-child(3)").text();
 
 		// Get the time variable
 		item[ 'time' ] = Number( text_time.replace( /[^\d]+/gi, '' ) ) || '';
