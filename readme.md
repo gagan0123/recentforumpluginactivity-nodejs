@@ -1,6 +1,6 @@
-# recentforumactivity Node.js #
+# recentforumpluginactivity Node.js #
 
-Display the topics of your WordPress dot org forum profile in order of activity. 
+Display the topics of your plugin on WordPress dot org forum in order of activity. 
 
 ## Install ##
 
@@ -10,10 +10,10 @@ See the config.js file for the port number and other settings.
 
 ```bash
 # clone the repository
-git clone https://github.com/keesiemeijer/recentforumactivity-nodejs.git
+git clone https://github.com/gagan0123/recentforumpluginactivity-nodejs.git
 
-# cd into the recentforumactivity-nodejs directory
-cd recentforumactivity-nodejs
+# cd into the recentforumpluginactivity-nodejs directory
+cd recentforumpluginactivity-nodejs
 
 # Install modules
 npm install
